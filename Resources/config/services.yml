@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    public: true
+
+  react.amqp:
+    class: Morbo\React\Amqp\Service\Amqp
+    arguments: ["@service_container", "@react.loop"]
+
+  Morbo\React\Amqp\Service\Amqp: '@react.amqp'
