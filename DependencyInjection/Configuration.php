@@ -32,8 +32,6 @@ class Configuration implements ConfigurationInterface
 
                             ->scalarNode('user')->defaultValue('guest')->end()
                             ->scalarNode('password')->defaultValue('guest')->end()
-
-                            ->scalarNode('preload')->defaultTrue()
                         ->end()
                     ->end()
                 ->end()

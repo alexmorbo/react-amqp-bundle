@@ -17,12 +17,12 @@ class Amqp
 
     private Client $client;
 
-    public function __construct(ContainerInterface $container, Loop $loop)
+    public function __construct(ContainerInterface $container, Loop $loop, array $connectionParams)
     {
         $this->container = $container;
         $this->loop = $loop->getLoop();
 
-        $this->client = new Client($this->loop, $container->getParameter('react.amqp.connection'));
+        $this->client = new Client($this->loop, $connectionParams);
     }
 
     public function getClient(): Client

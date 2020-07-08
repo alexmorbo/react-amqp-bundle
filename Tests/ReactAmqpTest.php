@@ -25,24 +25,9 @@ class ReactAmqpTest extends KernelTestCase
         $this->assertTrue(self::$container->has(Amqp::class), '"Amqp::class" is loaded');
     }
 
-    public function testParametersBag()
-    {
-        $this->assertIsArray(self::$container->getParameter('react.amqp.connection'));
-
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['host']);
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['port']);
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['vhost']);
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['user']);
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['password']);
-        $this->assertIsScalar(self::$container->getParameter('react.amqp.connection')['preload']);
-    }
-
     public function testClient()
     {
         $container = new ContainerBuilder();
-
-        $loopExtension = new ReactLoopExtension();
-        $loopExtension->load([], $container);
 
         $extension = new ReactAmqpExtension();
         $extension->load([], $container);

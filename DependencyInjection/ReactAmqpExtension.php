@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Morbo\React\Amqp\DependencyInjection;
 
+use Morbo\React\Loop\DependencyInjection\ReactLoopExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -19,7 +20,10 @@ class ReactAmqpExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('react.amqp.connection', $config['amqp']);
+        if (! $container->has('react.loop')) {
+            $extension = new ReactLoopExtension();
+            $extension->load([], $container);
+        }
 
         $loader = new YamlFileLoader(
             $container,
@@ -27,5 +31,8 @@ class ReactAmqpExtension extends Extension
         );
 
         $loader->load('services.yml');
+
+        $definition = $container->getDefinition('react.amqp');
+        $definition->replaceArgument(2, $config['amqp']);
     }
 }
